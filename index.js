@@ -24,9 +24,9 @@ const SAFETY_SETTINGS = [
 
 async function runChat() {
     const spinner = ora('Initializing chat...').start();
-    if(API_KEY === undefined){
+    if (API_KEY === undefined) {
         spinner.stop();
-        console.log(chalk.redBright('UNDEFINED API KEY')); 
+        console.log(chalk.redBright('UNDEFINED API KEY'));
         process.exit(1);
     }
     try {
@@ -47,13 +47,16 @@ async function runChat() {
                 console.log(chalk.yellow('Goodbye!'));
                 process.exit(0);
             }
+            const spinner = ora('Processing...').start();
             const result = await chat.sendMessage(userInput);
             if (result.error) {
-                console.error(chalk.red('AI Error:'), result.error.message);
+                spinner.stop();
+                console.error(chalk.red('Him Error:'), result.error.message);
                 continue;
             }
+            spinner.stop();
             const response = result.response.text();
-            console.log(chalk.blue('AI:'), response);
+            console.log(chalk.blue('Him:'), response);
         }
 
     } catch (error) {
